@@ -9,18 +9,30 @@ interface Task {
 
 function App() {
   const [task, setTask] = useState<Task[]>([]);
-  const [formData, setFormdata] = useState<Omit<Task, "id">>({
+  const [formData, setFormdata] = useState<Omit<Task, "id" | "completed">>({
     title: "",
-    completed: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, type, checked, value } = e.target;
+    const { name, value } = e.target;
     setFormdata((prev) => ({
       ...prev,
-      [name]: type == "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newTask: Task = {
+      id: Date.now(),
+      completed: false,
+      ...formData,
+    };
+
+    setTask((prev) => [...prev, newTask]);
+    setFormdata("");
+  };
+  console.log(task);
 
   return (
     <>
@@ -29,7 +41,7 @@ function App() {
       </div>
       {formData.title}
 
-      <div className="">
+      <form className="" onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
@@ -37,7 +49,7 @@ function App() {
           className="w-1/3 border-2 border-red-600 rounded-xl px-4 py-3 text-md"
           onChange={handleChange}
         />
-      </div>
+      </form>
     </>
   );
 }
