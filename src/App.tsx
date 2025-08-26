@@ -6,6 +6,7 @@ interface Task {
   id: number;
   title: string;
   completed: boolean;
+  priority: number;
 }
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       id: Date.now(),
       title,
       completed: false,
+      priority: 1,
     };
 
     setTask((prev) => [...prev, newTask]);
@@ -36,6 +38,13 @@ function App() {
       prev.map((n) => (n.id == id ? { ...n, completed: !n.completed } : n))
     );
   };
+
+  const handleDelete = (id: number) => {
+    setTask((prev) => prev.filter((n) => n.id !== id));
+  };
+
+  // const ChangePriority = (id = {});
+
   console.log(task);
 
   return (
@@ -60,7 +69,9 @@ function App() {
           key={index}
           title={item.title}
           completed={item.completed}
+          priority={item.priority}
           onClick={() => ToggleComplete(item.id)}
+          onDelete={() => handleDelete(item.id)}
         />
       ))}
     </>
