@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TaskCard from "./assets/TaskCard";
 import "./App.css";
 
 interface Task {
@@ -9,28 +10,31 @@ interface Task {
 
 function App() {
   const [task, setTask] = useState<Task[]>([]);
-  const [formData, setFormdata] = useState<Omit<Task, "id" | "completed">>({
-    title: "",
-  });
+  const [title, setTitle] = useState<string>("");
+  // const [formData, setFormdata] = useState<Omit<Task, "id" | "completed">>({
+  //   title: "",
+  // });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormdata((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setTitle(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTask: Task = {
       id: Date.now(),
+      title,
       completed: false,
-      ...formData,
     };
 
     setTask((prev) => [...prev, newTask]);
-    setFormdata("");
+    setTitle("");
+  };
+
+  const ToggleComplete = (id: number) => {
+    setTask((prev) =>
+      prev.map((n) => (n.id == id ? { ...n, completed: !n.completed } : n))
+    );
   };
   console.log(task);
 
@@ -39,17 +43,26 @@ function App() {
       <div className="rounded-full  mx-auto my-5 bg-green-400 text-white text-2xl font-bold flex justify-center items-center p-4 w-[100px] h-[100px] shadow-xl cursor-pointer">
         new task
       </div>
-      {formData.title}
+      {title}
 
       <form className="" onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
-          value={FormData.title}
+          value={title}
           className="w-1/3 border-2 border-red-600 rounded-xl px-4 py-3 text-md"
           onChange={handleChange}
         />
       </form>
+
+      {task.map((item, index) => (
+        <TaskCard
+          key={index}
+          title={item.title}
+          completed={item.completed}
+          onClick={() => ToggleComplete(item.id)}
+        />
+      ))}
     </>
   );
 }
