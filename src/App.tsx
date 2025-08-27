@@ -62,11 +62,10 @@ function App() {
   const letsee: Task[] = task.filter((n) => n.priority == filtered);
   console.log(letsee);
   return (
-    <div className="w-2/3 mx-auto bg-red-500">
+    <div className="w-2/3 mx-auto">
       <div className="rounded-full  mx-auto my-5 bg-green-400 text-white text-2xl font-bold flex justify-center items-center p-4 w-[100px] h-[100px] shadow-xl cursor-pointer">
         new task
       </div>
-      {title}
 
       <form
         className=" w-[400px] mx-auto  rounded-xl border border-red-400  p-3 flex flex-col justify-center items-center"
@@ -89,7 +88,6 @@ function App() {
         </div>
       </form>
 
-      <div className="">{filtered}</div>
       <select
         value={filtered}
         onChange={handleFilterChange}

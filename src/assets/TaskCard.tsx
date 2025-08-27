@@ -4,6 +4,7 @@ interface Props {
   completed?: boolean;
   priority: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onDelete: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 function TaskCard({ title, completed, onClick, onDelete, priority }: Props) {
