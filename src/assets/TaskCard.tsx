@@ -4,7 +4,6 @@ interface Props {
   completed?: boolean;
   priority: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
-  onDelete: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 function TaskCard({ title, completed, onClick, onDelete, priority }: Props) {
@@ -21,17 +20,9 @@ function TaskCard({ title, completed, onClick, onDelete, priority }: Props) {
         <button className="px-3 py-1  rounded-xl bg-red-500" onClick={onDelete}>
           delete
         </button>
-        <button
-          className="px-3 py-1  rounded-xl bg-orange-500"
-          onClick={onDelete}
-        >
+        <button className="px-3 py-1  rounded-xl bg-orange-500">
           {priority}
         </button>
-        <select name={priority} id="">
-          <option value="high">high</option>
-          <option value="mdium">medium</option>
-          <option value="low">low</option>
-        </select>
       </div>
     </div>
   );
